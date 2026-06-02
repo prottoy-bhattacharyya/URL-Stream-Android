@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.urlstream.model.VideoInfo
 import com.urlstream.ui.screens.HomeScreen
 import com.urlstream.ui.screens.PlayerScreen
+import com.urlstream.viewmodel.MainViewModel
 
 object VideoHolder {
     var currentVideo: VideoInfo? = null
@@ -20,13 +21,17 @@ object Routes {
 }
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(
+    navController: NavHostController,
+    viewModel: MainViewModel
+) {
     NavHost(
         navController = navController,
         startDestination = Routes.HOME
     ) {
         composable(Routes.HOME) {
             HomeScreen(
+                viewModel = viewModel,
                 onVideoClick = { video ->
                     VideoHolder.currentVideo = video
                     navController.navigate("player/${video.id}")

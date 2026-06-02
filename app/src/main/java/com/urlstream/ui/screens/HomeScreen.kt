@@ -53,10 +53,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -74,11 +72,13 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.urlstream.model.VideoInfo
 import com.urlstream.network.VideoParser
+import com.urlstream.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    viewModel: MainViewModel,
     onVideoClick: (VideoInfo) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -86,34 +86,29 @@ fun HomeScreen(
     val focusManager = LocalFocusManager.current
     val clipboardManager = LocalClipboardManager.current
 
-    var urlInput by remember { mutableStateOf("") }
-    var videos by remember { mutableStateOf<List<VideoInfo>>(emptyList()) }
-    var isLoading by remember { mutableStateOf(false) }
-    var hasFetched by remember { mutableStateOf(false) }
-
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val parser = remember { VideoParser() }
 
     val fetchVideos: () -> Unit = {
-        val trimmedUrl = urlInput.trim()
+        val trimmedUrl = viewModel.urlInput.trim()
         if (trimmedUrl.isNotBlank()) {
             focusManager.clearFocus()
-            isLoading = true
-            hasFetched = true
+            viewModel.isLoading = true
+            viewModel.hasFetched = true
             scope.launch {
                 val result = parser.parseUrl(trimmedUrl)
                 result.onSuccess { videoList ->
-                    videos = videoList
+                    viewModel.videos = videoList
                     if (videoList.isEmpty()) {
                         snackbarHostState.showSnackbar("No videos found on this page")
                     }
                 }.onFailure { error ->
-                    videos = emptyList()
+                    viewModel.videos = emptyList()
                     snackbarHostState.showSnackbar(
                         error.message ?: "Failed to fetch videos"
                     )
                 }
-                isLoading = false
+                viewModel.isLoading = false
             }
         }
     }
@@ -162,17 +157,17 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedTextField(
-                    value = urlInput,
-                    onValueChange = { urlInput = it },
+                    value = viewModel.urlInput,
+                    onValueChange = { viewModel.urlInput = it },
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = { Text("Paste video page URL here...") },
                     leadingIcon = {
                         Icon(Icons.Default.Link, contentDescription = null)
                     },
                     trailingIcon = {
-                        if (urlInput.isNotEmpty()) {
+                        if (viewModel.urlInput.isNotEmpty()) {
                             IconButton(onClick = {
-                                urlInput = clipboardManager.getText()?.text ?: ""
+                                viewModel.urlInput = clipboardManager.getText()?.text ?: ""
                             }) {
                                 Icon(
                                     Icons.Default.ContentPaste,
@@ -198,7 +193,7 @@ fun HomeScreen(
 
                 Button(
                     onClick = { fetchVideos() },
-                    enabled = !isLoading && urlInput.isNotBlank(),
+                    enabled = !viewModel.isLoading && viewModel.urlInput.isNotBlank(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp),
@@ -207,7 +202,7 @@ fun HomeScreen(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
-                    if (isLoading) {
+                    if (viewModel.isLoading) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(24.dp),
                             color = MaterialTheme.colorScheme.onPrimary,
@@ -227,7 +222,7 @@ fun HomeScreen(
             }
 
             AnimatedVisibility(
-                visible = isLoading,
+                visible = viewModel.isLoading,
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
@@ -252,9 +247,9 @@ fun HomeScreen(
                 }
             }
 
-            if (videos.isNotEmpty()) {
+            if (viewModel.videos.isNotEmpty()) {
                 Text(
-                    text = "${videos.size} video${if (videos.size != 1) "s" else ""} found",
+                    text = "${viewModel.videos.size} video${if (viewModel.videos.size != 1) "s" else ""} found",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -270,14 +265,14 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    items(videos, key = { it.id }) { video ->
+                    items(viewModel.videos, key = { it.id }) { video ->
                         VideoCard(
                             video = video,
                             onClick = { onVideoClick(video) }
                         )
                     }
                 }
-            } else if (hasFetched && !isLoading) {
+            } else if (viewModel.hasFetched && !viewModel.isLoading) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
