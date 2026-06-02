@@ -3,9 +3,13 @@ package com.urlstream.ui.screens
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.media.MediaPlayer
+import android.media.PlaybackParams
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.VideoView
 import androidx.activity.compose.BackHandler
 
 import androidx.compose.foundation.background
@@ -74,17 +78,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.media3.common.C
-import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
-import androidx.media3.common.TrackSelectionOverride
-import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
 import com.urlstream.model.VideoInfo
 import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalMaterial3Api::class, UnstableApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlayerScreen(
     video: VideoInfo,
@@ -103,54 +100,19 @@ fun PlayerScreen(
     var isSeeking by remember { mutableStateOf(false) }
     var seekFeedback by remember { mutableIntStateOf(0) }
     var showSpeedMenu by remember { mutableStateOf(false) }
+    var isPrepared by remember { mutableStateOf(false) }
 
-    var audioTrackLabels by remember { mutableStateOf<List<String>>(emptyList()) }
-    var selectedAudioTrack by remember { mutableIntStateOf(0) }
+    data class AudioTrackInfo(val trackInfoIndex: Int, val label: String)
+    var audioTracks by remember { mutableStateOf<List<AudioTrackInfo>>(emptyList()) }
+    var selectedAudioTrackDownIdx by remember { mutableIntStateOf(0) }
     var showAudioMenu by remember { mutableStateOf(false) }
 
-    val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(video.url))
-            prepare()
-            playWhenReady = true
-        }
-    }
+    val mediaPlayerRef = remember { mutableStateOf<MediaPlayer?>(null) }
 
-    val playerListener = remember {
-        object : Player.Listener {
-            override fun onPlaybackStateChanged(state: Int) {
-                if (state == Player.STATE_READY) {
-                    duration = exoPlayer.duration
-                    val tracks = exoPlayer.currentTracks
-                    val labels = mutableListOf<String>()
-                    for (i in 0 until tracks.groups.size) {
-                        val group = tracks.groups[i]
-                        if (group.type == C.TRACK_TYPE_AUDIO) {
-                            for (j in 0 until group.mediaTrackGroup.length) {
-                                val fmt = group.mediaTrackGroup.getFormat(j)
-                                val label = buildString {
-                                    append(fmt.label?.ifBlank { null } ?: "Track ${labels.size + 1}")
-                                    if (fmt.language != null) append(" (${fmt.language})")
-                                }
-                                labels.add(label)
-                            }
-                        }
-                    }
-                    audioTrackLabels = labels
-                }
-            }
-
-            override fun onIsPlayingChanged(playing: Boolean) {
-                isPlaying = playing
-            }
-        }
-    }
-
-    DisposableEffect(exoPlayer) {
-        exoPlayer.addListener(playerListener)
+    DisposableEffect(Unit) {
         onDispose {
-            exoPlayer.removeListener(playerListener)
-            exoPlayer.release()
+            mediaPlayerRef.value?.release()
+            mediaPlayerRef.value = null
         }
     }
 
@@ -172,7 +134,11 @@ fun PlayerScreen(
         while (true) {
             delay(250)
             if (!isSeeking) {
-                currentPosition = exoPlayer.currentPosition
+                val mp = mediaPlayerRef.value
+                if (mp != null) {
+                    currentPosition = mp.currentPosition.toLong()
+                    isPlaying = mp.isPlaying
+                }
             }
         }
     }
@@ -266,9 +232,42 @@ fun PlayerScreen(
             ) {
                 AndroidView(
                     factory = { ctx ->
-                        PlayerView(ctx).apply {
-                            player = exoPlayer
-                            useController = false
+                        VideoView(ctx).apply {
+                            setOnPreparedListener { mp ->
+                                mediaPlayerRef.value = mp
+                                duration = mp.duration.toLong()
+
+                                val allTracks = mp.trackInfo
+                                val audioTrackList = allTracks
+                                    .withIndex()
+                                    .filter { (_, t) ->
+                                        t.trackType == MediaPlayer.TrackInfo.MEDIA_TRACK_TYPE_AUDIO
+                                    }
+                                audioTracks = audioTrackList.mapIndexed { idx, (infoIdx, track) ->
+                                    val lang = track.format?.getString(
+                                        android.media.MediaFormat.KEY_LANGUAGE
+                                    )
+                                    AudioTrackInfo(
+                                        trackInfoIndex = infoIdx,
+                                        label = buildString {
+                                            append("Track ${idx + 1}")
+                                            if (lang != null) append(" ($lang)")
+                                        }
+                                    )
+                                }
+
+                                isPrepared = true
+                            }
+                            setOnErrorListener { _, what, extra ->
+                                Log.e("PlayerScreen", "MediaPlayer error: what=$what extra=$extra")
+                                true
+                            }
+                            setOnCompletionListener {
+                                isPlaying = false
+                            }
+
+                            setVideoURI(Uri.parse(video.url))
+                            requestFocus()
                         }
                     },
                     modifier = Modifier.fillMaxSize()
@@ -280,11 +279,14 @@ fun PlayerScreen(
                         .pointerInput(Unit) {
                             detectTapGestures(
                                 onDoubleTap = { offset ->
+                                    val mp = mediaPlayerRef.value ?: return@detectTapGestures
                                     val seekMs =
                                         if (offset.x < size.width / 2) -10000L else 10000L
-                                    val newPos = (exoPlayer.currentPosition + seekMs)
-                                        .coerceIn(0L, exoPlayer.duration.coerceAtLeast(0))
-                                    exoPlayer.seekTo(newPos)
+                                    @Suppress("DEPRECATION")
+                                    val newPos = (mp.currentPosition.toLong() + seekMs)
+                                        .coerceIn(0L, duration.coerceAtLeast(0))
+                                    @Suppress("DEPRECATION")
+                                    mp.seekTo(newPos.toInt())
                                     seekFeedback = if (seekMs < 0) -10 else 10
                                 },
                                 onTap = {
@@ -323,8 +325,14 @@ fun PlayerScreen(
                         ) {
                             IconButton(
                                 onClick = {
-                                    if (exoPlayer.isPlaying) exoPlayer.pause()
-                                    else exoPlayer.play()
+                                    val mp = mediaPlayerRef.value ?: return@IconButton
+                                    if (mp.isPlaying) {
+                                        mp.pause()
+                                        isPlaying = false
+                                    } else {
+                                        mp.start()
+                                        isPlaying = true
+                                    }
                                 },
                                 modifier = Modifier
                                     .align(Alignment.Center)
@@ -356,7 +364,8 @@ fun PlayerScreen(
                                     },
                                     onValueChangeFinished = {
                                         isSeeking = false
-                                        exoPlayer.seekTo(currentPosition)
+                                        @Suppress("DEPRECATION")
+                                        mediaPlayerRef.value?.seekTo(currentPosition.toInt())
                                     },
                                     colors = SliderDefaults.colors(
                                         thumbColor = Color.White,
@@ -427,7 +436,11 @@ fun PlayerScreen(
                                                     },
                                                     onClick = {
                                                         playbackSpeed = speed
-                                                        exoPlayer.setPlaybackSpeed(speed)
+                                                        mediaPlayerRef.value?.let { mp ->
+                                                            mp.playbackParams = mp.playbackParams.apply {
+                                                                setSpeed(speed)
+                                                            }
+                                                        }
                                                         showSpeedMenu = false
                                                     }
                                                 )
@@ -435,7 +448,7 @@ fun PlayerScreen(
                                         }
                                     }
 
-                                    if (audioTrackLabels.size > 1) {
+                                    if (audioTracks.size > 1) {
                                         Box {
                                             Text(
                                                 text = "Audio",
@@ -458,22 +471,31 @@ fun PlayerScreen(
                                                 expanded = showAudioMenu,
                                                 onDismissRequest = { showAudioMenu = false }
                                             ) {
-                                                audioTrackLabels.forEachIndexed { index, label ->
+                                                audioTracks.forEachIndexed { dropdownIdx, audioTrack ->
                                                     DropdownMenuItem(
                                                         text = {
                                                             Text(
-                                                                label,
-                                                                fontWeight = if (index == selectedAudioTrack)
+                                                                audioTrack.label,
+                                                                fontWeight = if (dropdownIdx == selectedAudioTrackDownIdx)
                                                                     FontWeight.Bold
                                                                 else FontWeight.Normal
                                                             )
                                                         },
                                                         onClick = {
-                                                            selectedAudioTrack = index
-                                                            switchAudioTrack(
-                                                                exoPlayer,
-                                                                index
-                                                            )
+                                                            val oldIdx = selectedAudioTrackDownIdx
+                                                            selectedAudioTrackDownIdx = dropdownIdx
+                                                            val mp = mediaPlayerRef.value
+                                                            if (mp != null) {
+                                                                runCatching {
+                                                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                                                        val oldInfoIdx = audioTracks
+                                                                            .getOrNull(oldIdx)
+                                                                            ?.trackInfoIndex ?: -1
+                                                                        mp.deselectTrack(oldInfoIdx)
+                                                                    }
+                                                                    mp.selectTrack(audioTrack.trackInfoIndex)
+                                                                }
+                                                            }
                                                             showAudioMenu = false
                                                         }
                                                     )
@@ -568,27 +590,6 @@ fun PlayerScreen(
                     Spacer(modifier = Modifier.height(32.dp))
                 }
             }
-        }
-    }
-}
-
-private fun switchAudioTrack(exoPlayer: ExoPlayer, trackIndex: Int) {
-    val tracks = exoPlayer.currentTracks
-    for (i in 0 until tracks.groups.size) {
-        val group = tracks.groups[i]
-        if (group.type == C.TRACK_TYPE_AUDIO) {
-            val trackGroup = group.mediaTrackGroup
-            if (trackIndex < trackGroup.length) {
-                val params = exoPlayer.trackSelectionParameters
-                    .buildUpon()
-                    .clearOverrides()
-                    .addOverride(
-                        TrackSelectionOverride(trackGroup, listOf(trackIndex))
-                    )
-                    .build()
-                exoPlayer.trackSelectionParameters = params
-            }
-            return
         }
     }
 }

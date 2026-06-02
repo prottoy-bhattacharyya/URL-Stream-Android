@@ -4,18 +4,6 @@ ADDED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml:2:1-24:12
 INJECTED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml:2:1-24:12
 INJECTED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml:2:1-24:12
 INJECTED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml:2:1-24:12
-MERGED from [androidx.media3:media3-ui:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\87d3782a65f8eed07c9114501f2f8cae\transformed\media3-ui-1.2.1\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-extractor:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\41ab15aa0563795d0c8be198a2a90fa4\transformed\media3-extractor-1.2.1\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-container:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\34571758f430ccf4ce46f274ccecfd81\transformed\media3-container-1.2.1\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-datasource:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\7ba8bc8d246a3cdcc0f0b6c6b4fc4e48\transformed\media3-datasource-1.2.1\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-decoder:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\1e20f2bfe586177128262df50efedee3\transformed\media3-decoder-1.2.1\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-database:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\99ea6a6a419667ddf188df8f8ff357a4\transformed\media3-database-1.2.1\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-common:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\168d6cfbcc8e27e99e6864179488d726\transformed\media3-common-1.2.1\AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.media3:media3-exoplayer-hls:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\cb4fef02ee8c476144606ebfb2a0db1d\transformed\media3-exoplayer-hls-1.2.1\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-exoplayer-dash:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\213e42bc9ab493c0638817e9c99d12e2\transformed\media3-exoplayer-dash-1.2.1\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media3:media3-exoplayer:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\6d6945bafdf49ad36f228fa99a4cac3b\transformed\media3-exoplayer-1.2.1\AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.media:media:1.6.0] C:\Users\USER\.gradle\caches\transforms-3\192b476248e74a986d93eca9f2fa6bda\transformed\media-1.6.0\AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.recyclerview:recyclerview:1.3.0] C:\Users\USER\.gradle\caches\transforms-3\eb902f5bca1f8277472552f5f7584ad9\transformed\recyclerview-1.3.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-common:2.7.7] C:\Users\USER\.gradle\caches\transforms-3\f15eb4fc8aa13e9e04064ef1aafcb2c9\transformed\navigation-common-2.7.7\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-runtime:2.7.7] C:\Users\USER\.gradle\caches\transforms-3\268e8c13dfa0cd29390bf982272e3010\transformed\navigation-runtime-2.7.7\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-common-ktx:2.7.7] C:\Users\USER\.gradle\caches\transforms-3\fba3e7764a62f6d19533bdefdcae213d\transformed\navigation-common-ktx-2.7.7\AndroidManifest.xml:2:1-7:12
@@ -58,7 +46,6 @@ MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\USER\.grad
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] C:\Users\USER\.gradle\caches\transforms-3\af014887db996c09301b8a0a4b947758\transformed\lifecycle-viewmodel-compose-2.7.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] C:\Users\USER\.gradle\caches\transforms-3\30b7ae6d1f7aa819c9008ced7411822f\transformed\accompanist-drawablepainter-0.32.0\AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.compose.ui:ui-android:1.6.1] C:\Users\USER\.gradle\caches\transforms-3\5bbe67b4e1976cf3ed30f61ba556027f\transformed\ui-release\AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.customview:customview:1.0.0] C:\Users\USER\.gradle\caches\transforms-3\b4e2155b09fb4d2a82ee2210f74de4b6\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\USER\.gradle\caches\transforms-3\ed13784557a114bf4e20eb69e0d51286\transformed\autofill-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\USER\.gradle\caches\transforms-3\2fd0cb4fe98f737439d366f57b52369e\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\USER\.gradle\caches\transforms-3\f137d2b409301a3b9d9406d9af722261\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
@@ -90,10 +77,6 @@ ADDED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml:4:5-67
 		ADDED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml:4:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml:5:5-79
-MERGED from [androidx.media3:media3-common:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\168d6cfbcc8e27e99e6864179488d726\transformed\media3-common-1.2.1\AndroidManifest.xml:22:5-79
-MERGED from [androidx.media3:media3-common:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\168d6cfbcc8e27e99e6864179488d726\transformed\media3-common-1.2.1\AndroidManifest.xml:22:5-79
-MERGED from [androidx.media3:media3-exoplayer:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\6d6945bafdf49ad36f228fa99a4cac3b\transformed\media3-exoplayer-1.2.1\AndroidManifest.xml:22:5-79
-MERGED from [androidx.media3:media3-exoplayer:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\6d6945bafdf49ad36f228fa99a4cac3b\transformed\media3-exoplayer-1.2.1\AndroidManifest.xml:22:5-79
 	android:name
 		ADDED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml:5:22-76
 application
@@ -151,30 +134,6 @@ uses-sdk
 INJECTED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml
 INJECTED from D:\project\URL_Stream\app\src\main\AndroidManifest.xml
-MERGED from [androidx.media3:media3-ui:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\87d3782a65f8eed07c9114501f2f8cae\transformed\media3-ui-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-ui:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\87d3782a65f8eed07c9114501f2f8cae\transformed\media3-ui-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-extractor:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\41ab15aa0563795d0c8be198a2a90fa4\transformed\media3-extractor-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-extractor:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\41ab15aa0563795d0c8be198a2a90fa4\transformed\media3-extractor-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-container:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\34571758f430ccf4ce46f274ccecfd81\transformed\media3-container-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-container:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\34571758f430ccf4ce46f274ccecfd81\transformed\media3-container-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-datasource:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\7ba8bc8d246a3cdcc0f0b6c6b4fc4e48\transformed\media3-datasource-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-datasource:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\7ba8bc8d246a3cdcc0f0b6c6b4fc4e48\transformed\media3-datasource-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-decoder:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\1e20f2bfe586177128262df50efedee3\transformed\media3-decoder-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-decoder:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\1e20f2bfe586177128262df50efedee3\transformed\media3-decoder-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-database:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\99ea6a6a419667ddf188df8f8ff357a4\transformed\media3-database-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-database:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\99ea6a6a419667ddf188df8f8ff357a4\transformed\media3-database-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-common:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\168d6cfbcc8e27e99e6864179488d726\transformed\media3-common-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-common:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\168d6cfbcc8e27e99e6864179488d726\transformed\media3-common-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-exoplayer-hls:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\cb4fef02ee8c476144606ebfb2a0db1d\transformed\media3-exoplayer-hls-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-exoplayer-hls:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\cb4fef02ee8c476144606ebfb2a0db1d\transformed\media3-exoplayer-hls-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-exoplayer-dash:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\213e42bc9ab493c0638817e9c99d12e2\transformed\media3-exoplayer-dash-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-exoplayer-dash:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\213e42bc9ab493c0638817e9c99d12e2\transformed\media3-exoplayer-dash-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-exoplayer:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\6d6945bafdf49ad36f228fa99a4cac3b\transformed\media3-exoplayer-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media3:media3-exoplayer:1.2.1] C:\Users\USER\.gradle\caches\transforms-3\6d6945bafdf49ad36f228fa99a4cac3b\transformed\media3-exoplayer-1.2.1\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media:media:1.6.0] C:\Users\USER\.gradle\caches\transforms-3\192b476248e74a986d93eca9f2fa6bda\transformed\media-1.6.0\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.media:media:1.6.0] C:\Users\USER\.gradle\caches\transforms-3\192b476248e74a986d93eca9f2fa6bda\transformed\media-1.6.0\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.recyclerview:recyclerview:1.3.0] C:\Users\USER\.gradle\caches\transforms-3\eb902f5bca1f8277472552f5f7584ad9\transformed\recyclerview-1.3.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.recyclerview:recyclerview:1.3.0] C:\Users\USER\.gradle\caches\transforms-3\eb902f5bca1f8277472552f5f7584ad9\transformed\recyclerview-1.3.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.navigation:navigation-common:2.7.7] C:\Users\USER\.gradle\caches\transforms-3\f15eb4fc8aa13e9e04064ef1aafcb2c9\transformed\navigation-common-2.7.7\AndroidManifest.xml:20:5-44
 MERGED from [androidx.navigation:navigation-common:2.7.7] C:\Users\USER\.gradle\caches\transforms-3\f15eb4fc8aa13e9e04064ef1aafcb2c9\transformed\navigation-common-2.7.7\AndroidManifest.xml:20:5-44
 MERGED from [androidx.navigation:navigation-runtime:2.7.7] C:\Users\USER\.gradle\caches\transforms-3\268e8c13dfa0cd29390bf982272e3010\transformed\navigation-runtime-2.7.7\AndroidManifest.xml:20:5-44
@@ -259,8 +218,6 @@ MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] C:\Users
 MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] C:\Users\USER\.gradle\caches\transforms-3\30b7ae6d1f7aa819c9008ced7411822f\transformed\accompanist-drawablepainter-0.32.0\AndroidManifest.xml:21:5-44
 MERGED from [androidx.compose.ui:ui-android:1.6.1] C:\Users\USER\.gradle\caches\transforms-3\5bbe67b4e1976cf3ed30f61ba556027f\transformed\ui-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-android:1.6.1] C:\Users\USER\.gradle\caches\transforms-3\5bbe67b4e1976cf3ed30f61ba556027f\transformed\ui-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.customview:customview:1.0.0] C:\Users\USER\.gradle\caches\transforms-3\b4e2155b09fb4d2a82ee2210f74de4b6\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.customview:customview:1.0.0] C:\Users\USER\.gradle\caches\transforms-3\b4e2155b09fb4d2a82ee2210f74de4b6\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\USER\.gradle\caches\transforms-3\ed13784557a114bf4e20eb69e0d51286\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\USER\.gradle\caches\transforms-3\ed13784557a114bf4e20eb69e0d51286\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\USER\.gradle\caches\transforms-3\2fd0cb4fe98f737439d366f57b52369e\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
