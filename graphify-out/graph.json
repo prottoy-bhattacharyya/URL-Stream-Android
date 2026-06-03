@@ -1,0 +1,971 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "settings.gradle.kts",
+      "file_type": "code",
+      "source_file": "settings.gradle.kts",
+      "source_location": "L1",
+      "id": "settings_gradle_kts",
+      "community": 7,
+      "norm_label": "settings.gradle.kts"
+    },
+    {
+      "label": "build.gradle.kts",
+      "file_type": "code",
+      "source_file": "build.gradle.kts",
+      "source_location": "L1",
+      "id": "build_gradle_kts",
+      "community": 8,
+      "norm_label": "build.gradle.kts"
+    },
+    {
+      "label": "build.gradle.kts",
+      "file_type": "code",
+      "source_file": "app/build.gradle.kts",
+      "source_location": "L1",
+      "id": "app_build_gradle_kts",
+      "community": 9,
+      "norm_label": "build.gradle.kts"
+    },
+    {
+      "label": "MainActivity.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/MainActivity.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_mainactivity_kt",
+      "community": 2,
+      "norm_label": "mainactivity.kt"
+    },
+    {
+      "label": "MainActivity",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/MainActivity.kt",
+      "source_location": "L16",
+      "id": "urlstream_mainactivity_mainactivity",
+      "community": 2,
+      "norm_label": "mainactivity"
+    },
+    {
+      "label": ".onCreate()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/MainActivity.kt",
+      "source_location": "L20",
+      "id": "urlstream_mainactivity_mainactivity_oncreate",
+      "community": 2,
+      "norm_label": ".oncreate()"
+    },
+    {
+      "label": "VideoInfo.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/model/VideoInfo.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_model_videoinfo_kt",
+      "community": 3,
+      "norm_label": "videoinfo.kt"
+    },
+    {
+      "label": "SubtitleTrack",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/model/VideoInfo.kt",
+      "source_location": "L6",
+      "id": "model_videoinfo_subtitletrack",
+      "community": 3,
+      "norm_label": "subtitletrack"
+    },
+    {
+      "label": "VideoInfo",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/model/VideoInfo.kt",
+      "source_location": "L13",
+      "id": "model_videoinfo_videoinfo",
+      "community": 3,
+      "norm_label": "videoinfo"
+    },
+    {
+      "label": "VideoParser.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_network_videoparser_kt",
+      "community": 0,
+      "norm_label": "videoparser.kt"
+    },
+    {
+      "label": "VideoParser",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L13",
+      "id": "network_videoparser_videoparser",
+      "community": 0,
+      "norm_label": "videoparser"
+    },
+    {
+      "label": ".parseUrl()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L15",
+      "id": "network_videoparser_videoparser_parseurl",
+      "community": 0,
+      "norm_label": ".parseurl()"
+    },
+    {
+      "label": ".parseVideoTags()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L45",
+      "id": "network_videoparser_videoparser_parsevideotags",
+      "community": 3,
+      "norm_label": ".parsevideotags()"
+    },
+    {
+      "label": ".parseDirectVideoLinks()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L141",
+      "id": "network_videoparser_videoparser_parsedirectvideolinks",
+      "community": 0,
+      "norm_label": ".parsedirectvideolinks()"
+    },
+    {
+      "label": ".parseIframeVideoSources()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L183",
+      "id": "network_videoparser_videoparser_parseiframevideosources",
+      "community": 5,
+      "norm_label": ".parseiframevideosources()"
+    },
+    {
+      "label": ".resolveUrl()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L227",
+      "id": "network_videoparser_videoparser_resolveurl",
+      "community": 5,
+      "norm_label": ".resolveurl()"
+    },
+    {
+      "label": ".extractThumbnail()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L238",
+      "id": "network_videoparser_videoparser_extractthumbnail",
+      "community": 5,
+      "norm_label": ".extractthumbnail()"
+    },
+    {
+      "label": ".extractNameFromUrl()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L254",
+      "id": "network_videoparser_videoparser_extractnamefromurl",
+      "community": 0,
+      "norm_label": ".extractnamefromurl()"
+    },
+    {
+      "label": ".extractFormat()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L266",
+      "id": "network_videoparser_videoparser_extractformat",
+      "community": 3,
+      "norm_label": ".extractformat()"
+    },
+    {
+      "label": ".extractResolutionFromUrl()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L274",
+      "id": "network_videoparser_videoparser_extractresolutionfromurl",
+      "community": 0,
+      "norm_label": ".extractresolutionfromurl()"
+    },
+    {
+      "label": ".getFileSizeAsync()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L300",
+      "id": "network_videoparser_videoparser_getfilesizeasync",
+      "community": 0,
+      "norm_label": ".getfilesizeasync()"
+    },
+    {
+      "label": ".formatFileSize()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L321",
+      "id": "network_videoparser_videoparser_formatfilesize",
+      "community": 0,
+      "norm_label": ".formatfilesize()"
+    },
+    {
+      "label": "NavGraph.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/navigation/NavGraph.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_navigation_navgraph_kt",
+      "community": 1,
+      "norm_label": "navgraph.kt"
+    },
+    {
+      "label": "VideoHolder",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/navigation/NavGraph.kt",
+      "source_location": "L14",
+      "id": "navigation_navgraph_videoholder",
+      "community": 1,
+      "norm_label": "videoholder"
+    },
+    {
+      "label": "Routes",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/navigation/NavGraph.kt",
+      "source_location": "L18",
+      "id": "navigation_navgraph_routes",
+      "community": 1,
+      "norm_label": "routes"
+    },
+    {
+      "label": "NavGraph()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/navigation/NavGraph.kt",
+      "source_location": "L23",
+      "id": "navigation_navgraph_navgraph",
+      "community": 1,
+      "norm_label": "navgraph()"
+    },
+    {
+      "label": "Color.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/theme/Color.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_ui_theme_color_kt",
+      "community": 10,
+      "norm_label": "color.kt"
+    },
+    {
+      "label": "Type.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/theme/Type.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_ui_theme_type_kt",
+      "community": 11,
+      "norm_label": "type.kt"
+    },
+    {
+      "label": "Theme.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/theme/Theme.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_ui_theme_theme_kt",
+      "community": 2,
+      "norm_label": "theme.kt"
+    },
+    {
+      "label": "URLStreamTheme()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/theme/Theme.kt",
+      "source_location": "L30",
+      "id": "theme_theme_urlstreamtheme",
+      "community": 2,
+      "norm_label": "urlstreamtheme()"
+    },
+    {
+      "label": "HomeScreen.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/HomeScreen.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_ui_screens_homescreen_kt",
+      "community": 1,
+      "norm_label": "homescreen.kt"
+    },
+    {
+      "label": "HomeScreen()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/HomeScreen.kt",
+      "source_location": "L78",
+      "id": "screens_homescreen_homescreen",
+      "community": 1,
+      "norm_label": "homescreen()"
+    },
+    {
+      "label": "VideoCard()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/HomeScreen.kt",
+      "source_location": "L329",
+      "id": "screens_homescreen_videocard",
+      "community": 1,
+      "norm_label": "videocard()"
+    },
+    {
+      "label": "PlayerScreen.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_ui_screens_playerscreen_kt",
+      "community": 4,
+      "norm_label": "playerscreen.kt"
+    },
+    {
+      "label": "PlayerScreen()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L99",
+      "id": "screens_playerscreen_playerscreen",
+      "community": 4,
+      "norm_label": "playerscreen()"
+    },
+    {
+      "label": "formatDuration()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L943",
+      "id": "screens_playerscreen_formatduration",
+      "community": 4,
+      "norm_label": "formatduration()"
+    },
+    {
+      "label": "playWithExternalApp()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L956",
+      "id": "screens_playerscreen_playwithexternalapp",
+      "community": 4,
+      "norm_label": "playwithexternalapp()"
+    },
+    {
+      "label": "InfoChip()",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L969",
+      "id": "screens_playerscreen_infochip",
+      "community": 4,
+      "norm_label": "infochip()"
+    },
+    {
+      "label": "MainViewModel.kt",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/viewmodel/MainViewModel.kt",
+      "source_location": "L1",
+      "id": "app_src_main_java_com_urlstream_viewmodel_mainviewmodel_kt",
+      "community": 6,
+      "norm_label": "mainviewmodel.kt"
+    },
+    {
+      "label": "MainViewModel",
+      "file_type": "code",
+      "source_file": "app/src/main/java/com/urlstream/viewmodel/MainViewModel.kt",
+      "source_location": "L9",
+      "id": "viewmodel_mainviewmodel_mainviewmodel",
+      "community": 6,
+      "norm_label": "mainviewmodel"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/MainActivity.kt",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_mainactivity_kt",
+      "target": "urlstream_mainactivity_mainactivity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/MainActivity.kt",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "urlstream_mainactivity_mainactivity",
+      "target": "urlstream_mainactivity_mainactivity_oncreate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/src/main/java/com/urlstream/MainActivity.kt",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "urlstream_mainactivity_mainactivity_oncreate",
+      "target": "theme_theme_urlstreamtheme"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/src/main/java/com/urlstream/MainActivity.kt",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "urlstream_mainactivity_mainactivity_oncreate",
+      "target": "navigation_navgraph_navgraph"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/model/VideoInfo.kt",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_model_videoinfo_kt",
+      "target": "model_videoinfo_subtitletrack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/model/VideoInfo.kt",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_model_videoinfo_kt",
+      "target": "model_videoinfo_videoinfo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsevideotags",
+      "target": "model_videoinfo_subtitletrack"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsevideotags",
+      "target": "model_videoinfo_videoinfo"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsedirectvideolinks",
+      "target": "model_videoinfo_videoinfo"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L211",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parseiframevideosources",
+      "target": "model_videoinfo_videoinfo"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_network_videoparser_kt",
+      "target": "network_videoparser_videoparser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_parseurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_parsevideotags",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L141",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_parsedirectvideolinks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L183",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_parseiframevideosources",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L227",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L238",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_extractthumbnail",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L254",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_extractnamefromurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L266",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_extractformat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L274",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_extractresolutionfromurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L300",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_getfilesizeasync",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L321",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser",
+      "target": "network_videoparser_videoparser_formatfilesize",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/HomeScreen.kt",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "screens_homescreen_homescreen",
+      "target": "network_videoparser_videoparser"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parseurl",
+      "target": "network_videoparser_videoparser_parsevideotags",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parseurl",
+      "target": "network_videoparser_videoparser_parsedirectvideolinks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parseurl",
+      "target": "network_videoparser_videoparser_parseiframevideosources",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsevideotags",
+      "target": "network_videoparser_videoparser_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsevideotags",
+      "target": "network_videoparser_videoparser_extractnamefromurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsevideotags",
+      "target": "network_videoparser_videoparser_getfilesizeasync",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsevideotags",
+      "target": "network_videoparser_videoparser_extractthumbnail",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsevideotags",
+      "target": "network_videoparser_videoparser_extractformat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L155",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsedirectvideolinks",
+      "target": "network_videoparser_videoparser_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L161",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsedirectvideolinks",
+      "target": "network_videoparser_videoparser_extractnamefromurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L164",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsedirectvideolinks",
+      "target": "network_videoparser_videoparser_getfilesizeasync",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L171",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsedirectvideolinks",
+      "target": "network_videoparser_videoparser_extractthumbnail",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L172",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parsedirectvideolinks",
+      "target": "network_videoparser_videoparser_extractresolutionfromurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L197",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parseiframevideosources",
+      "target": "network_videoparser_videoparser_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L207",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_parseiframevideosources",
+      "target": "network_videoparser_videoparser_extractthumbnail",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L241",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_extractthumbnail",
+      "target": "network_videoparser_videoparser_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/network/VideoParser.kt",
+      "source_location": "L312",
+      "weight": 1.0,
+      "source": "network_videoparser_videoparser_getfilesizeasync",
+      "target": "network_videoparser_videoparser_formatfilesize",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/navigation/NavGraph.kt",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_navigation_navgraph_kt",
+      "target": "navigation_navgraph_videoholder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/navigation/NavGraph.kt",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_navigation_navgraph_kt",
+      "target": "navigation_navgraph_routes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/navigation/NavGraph.kt",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_navigation_navgraph_kt",
+      "target": "navigation_navgraph_navgraph",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/src/main/java/com/urlstream/navigation/NavGraph.kt",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "navigation_navgraph_navgraph",
+      "target": "screens_homescreen_homescreen"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/src/main/java/com/urlstream/navigation/NavGraph.kt",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "navigation_navgraph_navgraph",
+      "target": "screens_playerscreen_playerscreen"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/theme/Theme.kt",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_ui_theme_theme_kt",
+      "target": "theme_theme_urlstreamtheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/HomeScreen.kt",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_ui_screens_homescreen_kt",
+      "target": "screens_homescreen_homescreen",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/HomeScreen.kt",
+      "source_location": "L329",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_ui_screens_homescreen_kt",
+      "target": "screens_homescreen_videocard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/HomeScreen.kt",
+      "source_location": "L269",
+      "weight": 1.0,
+      "source": "screens_homescreen_homescreen",
+      "target": "screens_homescreen_videocard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_ui_screens_playerscreen_kt",
+      "target": "screens_playerscreen_playerscreen",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L943",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_ui_screens_playerscreen_kt",
+      "target": "screens_playerscreen_formatduration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L956",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_ui_screens_playerscreen_kt",
+      "target": "screens_playerscreen_playwithexternalapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L969",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_ui_screens_playerscreen_kt",
+      "target": "screens_playerscreen_infochip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L700",
+      "weight": 1.0,
+      "source": "screens_playerscreen_playerscreen",
+      "target": "screens_playerscreen_formatduration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L871",
+      "weight": 1.0,
+      "source": "screens_playerscreen_playerscreen",
+      "target": "screens_playerscreen_infochip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/ui/screens/PlayerScreen.kt",
+      "source_location": "L919",
+      "weight": 1.0,
+      "source": "screens_playerscreen_playerscreen",
+      "target": "screens_playerscreen_playwithexternalapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/src/main/java/com/urlstream/viewmodel/MainViewModel.kt",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_src_main_java_com_urlstream_viewmodel_mainviewmodel_kt",
+      "target": "viewmodel_mainviewmodel_mainviewmodel",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "95188638554e49d6d24298f3ae8897e9631c00b0"
+}
