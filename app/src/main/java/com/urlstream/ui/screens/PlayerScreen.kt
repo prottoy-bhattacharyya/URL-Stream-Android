@@ -1,15 +1,23 @@
 package com.urlstream.ui.screens
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.media.AudioFocusRequest
+import android.media.AudioManager
+import android.media.MediaMetadata
 import android.media.MediaPlayer
 import android.media.PlaybackParams
+import android.media.session.MediaSession
+import android.media.session.PlaybackState
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.VideoView
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 
 import androidx.compose.foundation.background
@@ -32,15 +40,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ClosedCaption
 import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.filled.FullscreenExit
 import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -60,11 +71,13 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,6 +91,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.urlstream.model.VideoInfo
 import kotlinx.coroutines.delay
 
@@ -88,7 +103,8 @@ fun PlayerScreen(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
-    val activity = context as? Activity
+    val activity = context as? ComponentActivity
+    val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     val scrollState = rememberScrollState()
 
     var isFullscreen by remember { mutableStateOf(false) }
@@ -107,10 +123,193 @@ fun PlayerScreen(
     var selectedAudioTrackDownIdx by remember { mutableIntStateOf(0) }
     var showAudioMenu by remember { mutableStateOf(false) }
 
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    var isBuffering by remember { mutableStateOf(false) }
+    var retryTrigger by remember { mutableIntStateOf(0) }
+
+    var savedPosition by rememberSaveable { mutableStateOf(0L) }
+    var savedIsPlaying by rememberSaveable { mutableStateOf(false) }
+    var shouldRestore by rememberSaveable { mutableStateOf(false) }
+
+    var hasSubtitles by remember { mutableStateOf(false) }
+    var subtitlesOn by remember { mutableStateOf(false) }
+
     val mediaPlayerRef = remember { mutableStateOf<MediaPlayer?>(null) }
+    var videoViewRef by remember { mutableStateOf<VideoView?>(null) }
+
+    val audioFocusChangeListener = remember {
+        AudioManager.OnAudioFocusChangeListener { focusChange ->
+            when (focusChange) {
+                AudioManager.AUDIOFOCUS_LOSS,
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                    mediaPlayerRef.value?.let { mp ->
+                        if (mp.isPlaying) {
+                            mp.pause()
+                            isPlaying = false
+                        }
+                    }
+                }
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> { }
+                AudioManager.AUDIOFOCUS_GAIN -> { }
+            }
+        }
+    }
+
+    val mediaSession = remember {
+        MediaSession(context, "UrlStreamPlayer").apply {
+            setCallback(object : MediaSession.Callback() {
+                override fun onPlay() {
+                    mediaPlayerRef.value?.let { mp ->
+                        if (!mp.isPlaying) {
+                            mp.start()
+                            isPlaying = true
+                        }
+                    }
+                }
+                override fun onPause() {
+                    mediaPlayerRef.value?.let { mp ->
+                        if (mp.isPlaying) {
+                            mp.pause()
+                            isPlaying = false
+                        }
+                    }
+                }
+                override fun onSeekTo(pos: Long) {
+                    @Suppress("DEPRECATION")
+                    mediaPlayerRef.value?.seekTo(pos.toInt())
+                    currentPosition = pos
+                }
+            })
+            setMetadata(
+                MediaMetadata.Builder()
+                    .putString(MediaMetadata.METADATA_KEY_TITLE, video.title)
+                    .putString(MediaMetadata.METADATA_KEY_DISPLAY_ICON_URI, video.thumbnailUrl)
+                    .putString(MediaMetadata.METADATA_KEY_MEDIA_URI, video.url)
+                    .build()
+            )
+            isActive = true
+        }
+    }
+
+    fun updatePlaybackState() {
+        mediaSession.setPlaybackState(
+            PlaybackState.Builder()
+                .setActions(
+                    PlaybackState.ACTION_PLAY or
+                    PlaybackState.ACTION_PAUSE or
+                    PlaybackState.ACTION_SEEK_TO or
+                    PlaybackState.ACTION_PLAY_PAUSE
+                )
+                .setState(
+                    if (isPlaying) PlaybackState.STATE_PLAYING else PlaybackState.STATE_PAUSED,
+                    currentPosition,
+                    playbackSpeed
+                )
+                .build()
+        )
+    }
+
+    fun requestAudioFocus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val focusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                .setOnAudioFocusChangeListener(audioFocusChangeListener)
+                .build()
+            audioManager.requestAudioFocus(focusRequest)
+        } else {
+            @Suppress("DEPRECATION")
+            audioManager.requestAudioFocus(
+                audioFocusChangeListener,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN
+            )
+        }
+    }
+
+    fun abandonAudioFocus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val focusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                .setOnAudioFocusChangeListener(audioFocusChangeListener)
+                .build()
+            audioManager.abandonAudioFocusRequest(focusRequest)
+        } else {
+            @Suppress("DEPRECATION")
+            audioManager.abandonAudioFocus(audioFocusChangeListener)
+        }
+    }
+
+    fun toggleSubtitles() {
+        val mp = mediaPlayerRef.value ?: return
+        val tracks = mp.trackInfo
+        var subtitleIdx = -1
+        for (i in tracks.indices) {
+            val type = tracks[i].trackType
+            if (type == MediaPlayer.TrackInfo.MEDIA_TRACK_TYPE_TIMEDTEXT ||
+                type == MediaPlayer.TrackInfo.MEDIA_TRACK_TYPE_SUBTITLE
+            ) {
+                subtitleIdx = i
+                break
+            }
+        }
+        if (subtitleIdx < 0) return
+        if (subtitlesOn) {
+            runCatching {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    mp.deselectTrack(subtitleIdx)
+                }
+            }
+            subtitlesOn = false
+        } else {
+            runCatching { mp.selectTrack(subtitleIdx) }
+            subtitlesOn = true
+        }
+    }
+
+    DisposableEffect(activity) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_PAUSE -> {
+                    mediaPlayerRef.value?.let { mp ->
+                        savedPosition = mp.currentPosition.toLong()
+                        savedIsPlaying = mp.isPlaying
+                        shouldRestore = true
+                        if (mp.isPlaying) {
+                            mp.pause()
+                            isPlaying = false
+                        }
+                    }
+                }
+                Lifecycle.Event.ON_RESUME -> {
+                    val mp = mediaPlayerRef.value
+                    if (mp != null && shouldRestore) {
+                        shouldRestore = false
+                        if (savedPosition > 0) {
+                            @Suppress("DEPRECATION")
+                            mp.seekTo(savedPosition.toInt())
+                        }
+                        if (savedIsPlaying) {
+                            mp.start()
+                            isPlaying = true
+                        }
+                    }
+                }
+                else -> {}
+            }
+        }
+        activity?.lifecycle?.addObserver(observer)
+        onDispose { activity?.lifecycle?.removeObserver(observer) }
+    }
 
     DisposableEffect(Unit) {
+        requestAudioFocus()
         onDispose {
+            abandonAudioFocus()
+        }
+    }
+
+    DisposableEffect(mediaSession) {
+        onDispose {
+            mediaSession.isActive = false
+            mediaSession.release()
             mediaPlayerRef.value?.release()
             mediaPlayerRef.value = null
         }
@@ -136,8 +335,26 @@ fun PlayerScreen(
             if (!isSeeking) {
                 val mp = mediaPlayerRef.value
                 if (mp != null) {
-                    currentPosition = mp.currentPosition.toLong()
-                    isPlaying = mp.isPlaying
+                    val pos = mp.currentPosition.toLong()
+                    if (pos > 0 || currentPosition == 0L) {
+                        currentPosition = pos
+                    }
+                    val currentlyPlaying = mp.isPlaying
+                    if (currentlyPlaying != isPlaying) isPlaying = currentlyPlaying
+                    updatePlaybackState()
+
+                    if (!hasSubtitles && video.subtitleTracks.isNotEmpty()) {
+                        val tracks = mp.trackInfo
+                        for (i in tracks.indices) {
+                            val type = tracks[i].trackType
+                            if (type == MediaPlayer.TrackInfo.MEDIA_TRACK_TYPE_TIMEDTEXT ||
+                                type == MediaPlayer.TrackInfo.MEDIA_TRACK_TYPE_SUBTITLE
+                            ) {
+                                hasSubtitles = true
+                                break
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -193,7 +410,7 @@ fun PlayerScreen(
                         IconButton(onClick = {
                             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/plain"
-                                putExtra(Intent.EXTRA_TEXT, video.url)
+                                putExtra(Intent.EXTRA_TEXT, "${video.title}\n${video.url}")
                             }
                             context.startActivity(
                                 Intent.createChooser(shareIntent, "Share video link")
@@ -230,48 +447,146 @@ fun PlayerScreen(
                     )
                     .background(Color.Black)
             ) {
-                AndroidView(
-                    factory = { ctx ->
-                        VideoView(ctx).apply {
-                            setOnPreparedListener { mp ->
-                                mediaPlayerRef.value = mp
-                                duration = mp.duration.toLong()
+                key(retryTrigger) {
+                    AndroidView(
+                        factory = { ctx ->
+                            VideoView(ctx).apply {
+                                setOnPreparedListener { mp ->
+                                    mediaPlayerRef.value = mp
+                                    duration = mp.duration.toLong()
+                                    errorMessage = null
 
-                                val allTracks = mp.trackInfo
-                                val audioTrackList = allTracks
-                                    .withIndex()
-                                    .filter { (_, t) ->
-                                        t.trackType == MediaPlayer.TrackInfo.MEDIA_TRACK_TYPE_AUDIO
-                                    }
-                                audioTracks = audioTrackList.mapIndexed { idx, (infoIdx, track) ->
-                                    val lang = track.format?.getString(
-                                        android.media.MediaFormat.KEY_LANGUAGE
-                                    )
-                                    AudioTrackInfo(
-                                        trackInfoIndex = infoIdx,
-                                        label = buildString {
-                                            append("Track ${idx + 1}")
-                                            if (lang != null) append(" ($lang)")
+                                    val allTracks = mp.trackInfo
+                                    val audioTrackList = allTracks
+                                        .withIndex()
+                                        .filter { (_, t) ->
+                                            t.trackType == MediaPlayer.TrackInfo.MEDIA_TRACK_TYPE_AUDIO
                                         }
-                                    )
+                                    audioTracks = audioTrackList.mapIndexed { idx, (infoIdx, track) ->
+                                        val lang = track.format?.getString(
+                                            android.media.MediaFormat.KEY_LANGUAGE
+                                        )
+                                        AudioTrackInfo(
+                                            trackInfoIndex = infoIdx,
+                                            label = buildString {
+                                                append("Track ${idx + 1}")
+                                                if (lang != null) append(" ($lang)")
+                                            }
+                                        )
+                                    }
+
+                                    for (sub in video.subtitleTracks) {
+                                        val mimeType = if (sub.url.contains(".vtt") ||
+                                            sub.url.contains(".webvtt")
+                                        ) {
+                                            "text/vtt"
+                                        } else {
+                                            "text/x-microdvd"
+                                        }
+                                        runCatching {
+                                            mp.addTimedTextSource(ctx, Uri.parse(sub.url), mimeType)
+                                        }
+                                    }
+
+                                    mp.setOnSeekCompleteListener {
+                                        isSeeking = false
+                                    }
+
+                                    if (shouldRestore && savedPosition > 0) {
+                                        shouldRestore = false
+                                        @Suppress("DEPRECATION")
+                                        mp.seekTo(savedPosition.toInt())
+                                        if (savedIsPlaying) {
+                                            mp.start()
+                                            isPlaying = true
+                                        }
+                                    }
+
+                                    isPrepared = true
+                                }
+                                setOnErrorListener { _, what, extra ->
+                                    Log.e("PlayerScreen", "MediaPlayer error: what=$what extra=$extra")
+                                    errorMessage = "Playback error ($what/$extra)"
+                                    isPrepared = false
+                                    true
+                                }
+                                setOnInfoListener { _, what, _ ->
+                                    when (what) {
+                                        MediaPlayer.MEDIA_INFO_BUFFERING_START -> {
+                                            isBuffering = true
+                                            true
+                                        }
+                                        MediaPlayer.MEDIA_INFO_BUFFERING_END -> {
+                                            isBuffering = false
+                                            true
+                                        }
+                                        else -> false
+                                    }
+                                }
+                                setOnCompletionListener {
+                                    isPlaying = false
                                 }
 
-                                isPrepared = true
+                                setVideoURI(Uri.parse(video.url))
+                                requestFocus()
+                                videoViewRef = this
                             }
-                            setOnErrorListener { _, what, extra ->
-                                Log.e("PlayerScreen", "MediaPlayer error: what=$what extra=$extra")
-                                true
-                            }
-                            setOnCompletionListener {
-                                isPlaying = false
-                            }
+                        },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
 
-                            setVideoURI(Uri.parse(video.url))
-                            requestFocus()
+                if (isBuffering && isPrepared) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.4f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(color = Color.White)
+                    }
+                }
+
+                if (errorMessage != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.7f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                text = errorMessage ?: "Playback error",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(horizontal = 32.dp)
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            FilledTonalButton(
+                                onClick = {
+                                    errorMessage = null
+                                    isPrepared = false
+                                    isPlaying = false
+                                    isBuffering = false
+                                    currentPosition = 0L
+                                    duration = 0L
+                                    mediaPlayerRef.value = null
+                                    videoViewRef?.stopPlayback()
+                                    videoViewRef = null
+                                    retryTrigger++
+                                },
+                                colors = ButtonDefaults.filledTonalButtonColors(
+                                    containerColor = Color.White.copy(alpha = 0.2f)
+                                )
+                            ) {
+                                Icon(Icons.Default.Refresh, contentDescription = null)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("Retry", color = Color.White)
+                            }
                         }
-                    },
-                    modifier = Modifier.fillMaxSize()
-                )
+                    }
+                }
 
                 Box(
                     modifier = Modifier
@@ -290,7 +605,7 @@ fun PlayerScreen(
                                     seekFeedback = if (seekMs < 0) -10 else 10
                                 },
                                 onTap = {
-                                    showControls = !showControls
+                                    if (errorMessage == null) showControls = !showControls
                                 }
                             )
                         }
@@ -317,7 +632,7 @@ fun PlayerScreen(
                         }
                     }
 
-                    if (showControls) {
+                    if (showControls && errorMessage == null) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -363,7 +678,6 @@ fun PlayerScreen(
                                         currentPosition = (fraction * duration).toLong()
                                     },
                                     onValueChangeFinished = {
-                                        isSeeking = false
                                         @Suppress("DEPRECATION")
                                         mediaPlayerRef.value?.seekTo(currentPosition.toInt())
                                     },
@@ -487,7 +801,7 @@ fun PlayerScreen(
                                                             val mp = mediaPlayerRef.value
                                                             if (mp != null) {
                                                                 runCatching {
-                                                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                                                         val oldInfoIdx = audioTracks
                                                                             .getOrNull(oldIdx)
                                                                             ?.trackInfoIndex ?: -1
@@ -501,6 +815,20 @@ fun PlayerScreen(
                                                     )
                                                 }
                                             }
+                                        }
+                                    }
+
+                                    if (hasSubtitles || video.subtitleTracks.isNotEmpty()) {
+                                        IconButton(
+                                            onClick = { toggleSubtitles() }
+                                        ) {
+                                            Icon(
+                                                Icons.Default.ClosedCaption,
+                                                contentDescription = if (subtitlesOn) "Disable subtitles"
+                                                else "Enable subtitles",
+                                                tint = if (subtitlesOn) Color(0xFF4FC3F7)
+                                                else Color.White.copy(alpha = 0.7f)
+                                            )
                                         }
                                     }
 
@@ -566,6 +894,24 @@ fun PlayerScreen(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+
+                    if (video.subtitleTracks.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = "Subtitles",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        video.subtitleTracks.forEach { sub ->
+                            Text(
+                                text = "${sub.label.ifBlank { sub.srclang.ifBlank { "Unknown" } }} (${sub.srclang.ifBlank { "?" }})",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
 
                     Spacer(modifier = Modifier.height(24.dp))
 

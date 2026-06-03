@@ -4,6 +4,13 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+data class SubtitleTrack(
+    val url: String,
+    val srclang: String,
+    val label: String
+) : Parcelable
+
+@Parcelize
 data class VideoInfo(
     val id: Int,
     val title: String,
@@ -11,5 +18,6 @@ data class VideoInfo(
     val thumbnailUrl: String,
     val resolution: String,
     val size: String,
-    val format: String
+    val format: String,
+    val subtitleTracks: List<SubtitleTrack> = emptyList()
 ) : Parcelable

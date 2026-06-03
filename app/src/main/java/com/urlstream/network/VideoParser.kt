@@ -1,5 +1,6 @@
 package com.urlstream.network
 
+import com.urlstream.model.SubtitleTrack
 import com.urlstream.model.VideoInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -58,6 +59,20 @@ class VideoParser {
                 }
             }
 
+            val subtitleTracks = video.select("track").mapNotNull { track ->
+                val src = track.attr("src").trim()
+                if (src.isNotBlank()) {
+                    val absoluteSrc = resolveUrl(baseUri, src)
+                    if (absoluteSrc != null) {
+                        SubtitleTrack(
+                            url = absoluteSrc,
+                            srclang = track.attr("srclang"),
+                            label = track.attr("label")
+                        )
+                    } else null
+                } else null
+            }
+
             val sources = video.select("source")
             if (sources.isNotEmpty()) {
                 sources.forEachIndexed { index, source ->
@@ -86,7 +101,8 @@ class VideoParser {
                                 thumbnailUrl = resolveUrl(baseUri, poster) ?: extractThumbnail(doc, baseUri),
                                 resolution = resolution,
                                 size = size,
-                                format = extractFormat(type, absoluteSrc)
+                                format = extractFormat(type, absoluteSrc),
+                                subtitleTracks = subtitleTracks
                             )
                         )
                     }
@@ -111,7 +127,8 @@ class VideoParser {
                                 if (h.isNotBlank()) "${h}p" else ""
                             },
                             size = size,
-                            format = extractFormat("", absoluteSrc)
+                            format = extractFormat("", absoluteSrc),
+                            subtitleTracks = subtitleTracks
                         )
                     )
                 }
